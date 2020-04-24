@@ -1,0 +1,142 @@
+.header_wrap{
+  border-bottom: 1px solid #ddd;
+  line-height: 80px;
+  font-size: 16px;
+  overflow: hidden;
+  text-align: center;
+}
+.content_warp{
+  height: calc(100% - 12px);
+  overflow: auto;
+  display: flex;
+}
+.content_left{
+  flex: 1;
+  height: 100%;
+  border-right: 1px solid #ddd;
+}
+.content_left li {
+  border-left: 4px solid #fff;
+  line-height: 80px;
+  font-size: 18px;
+  text-align: center;
+}
+.content_right{
+  width: 1140px;
+  height: 100%;
+}
+.content_left .active_second_menu{
+  border-left-color: #599BF8;
+  background: rgba(89,155,248,0.10);
+}
+
+/*列表展示*/
+.table_wrap{
+  height: 100%;
+  padding: 0 20px 20px 40px;
+  display: flex;
+  flex-direction: column;
+}
+.table_bar{
+  padding: 20px 0;
+}
+.table_content{
+  flex: 1;
+  overflow-y: hidden;
+}
+
+/*操作按钮的颜色*/
+.operation_button{
+  color: #599BF8;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+/*!*滚动条*!*/
+/**::-webkit-scrollbar {width: 6px;height: 6px;}*/
+/**::-webkit-scrollbar-thumb {border-radius: 2px;background: #ccc;}*/
+/**::-webkit-scrollbar-track {background: #f5f7fa;border-radius: 2px;}*/
+/**::-webkit-scrollbar-corner {background:#fff;}*/
+
+
+/*element样式覆盖*/
+.el-input__inner{
+  border-radius: 2px;
+}
+.el-button{
+  border-radius: 2px;
+}
+.el-form-item__label,.el-select-dropdown__item,.el-input__inner,.el-textarea__inner,.el-checkbox{
+  color: #333;
+}
+
+/*表格*/
+.el-table__header,
+.el-table__body{
+  width: 100% !important;
+}
+.el-table td, .el-table th{
+  padding: 18px 0;
+}
+.el-table th{
+  background: #F5F7FA;
+}
+.el-table__header{
+  background: #F5F7FA;
+}
+.el-table thead{
+  color: #333;
+}
+.el-table{
+  color: #333;
+}
+.el-table__empty-text{
+  color: #333;
+}
+
+/*弹窗*/
+.el-dialog__header{
+  padding: 18px 20px;
+  background: #EEF3F5;
+}
+.el-dialog--center .el-dialog__body{
+  padding: 0;
+}
+.el-dialog__footer{
+  padding: 20px;
+  border-top: 1px solid #ddd;
+}
+.el-dialog__footer .el-button{
+  padding: 12px 40px;
+}
+.el-button+.el-button{
+  margin-left: 20px;
+}
+
+/*抽屉*/
+.el-drawer__body{
+  overflow-y: auto;
+}
+
+/*表单*/
+.el-form-item__content{
+  text-align: left;
+}
+.el-form-item .el-select{
+  width: 100%;
+}
+
+.el-date-editor--date .el-input__prefix{
+  top: 2px;
+}
+
+/*抽屉*/
+.el-drawer__header{
+  padding: 0 0 0 30px;
+  margin: 0;
+  height: 100px;
+  line-height: 100px;
+  font-size: 18px;
+  color: #333;
+  background: #ECEFF4;
+}
