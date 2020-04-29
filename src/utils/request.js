@@ -7,7 +7,7 @@ import {
 
 let loadingInstance = null
 const service = axios.create({
-  baseURL: '/eidm', // api的base_url
+  baseURL: '/bgam', // api的base_url
   timeout: 600 * 1000
 })
 
