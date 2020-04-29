@@ -29,14 +29,14 @@
         },
         rules: {
           name: [{required: true, message: '请输入账号', trigger: 'blur'},
-            {min: 3, max: 15, message: "长度在3-15个字符之间", trigger: 'blur'}],
+            {min: 3, max: 15, message: "长度在1-15个字符之间", trigger: 'blur'}],
           password: [{required: true, message: '请输入密码', trigger: 'blur'},
             {min: 1, max: 15, message: "长度在1-15个字符之间", trigger: 'blur'}]
         }
       }
     },
     methods: {
-      onSubmit(formName) {
+      /*onSubmit(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             if (this.form.name === 'liuwei' && this.form.password === '111111') {
@@ -62,6 +62,44 @@
             return false;
           }
         });
+      },*/
+      // 登录
+      onSubmit(formName) {
+        this.axios({
+          method: 'get',
+          url: '/public/login',
+          params: {
+            account: this.form.name,
+            password: this.form.password
+          }
+        }).then((data) => {
+          var managerId;
+          try {
+            managerId = data.data.manager.id;
+          } catch (e) {
+          }
+          var personId = data.data.person.id;
+          if (personId != null && managerId == null) {
+            this.$message({
+              type: 'error',
+              message: '您不是管理员',
+              offset: 90
+            });
+          } else {
+            this.$router.push("/eis/enterpriseInfo");
+            this.$message({
+              type: 'success',
+              message: '登录成功',
+              offset: 90
+            })
+          }
+          //this.refresh()
+        })
+        /*this.$confirm('是否确认删除？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(() => {
+        })*/
       }
     }
   }
@@ -69,7 +107,7 @@
 <style lang="scss" scoped>
   .login-box {
     width: 27%; //宽度
-    margin:auto; //距离上方180px
+    margin: auto; //距离上方180px
     border: 1px solid #DCDFE6; //边框
     padding: 35px; //边框边距
     border-radius: 5px; //圆角

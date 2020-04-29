@@ -14,7 +14,7 @@
     </template>
     <div class="demo-drawer__content">
       <el-form ref="form" :model="formData" :rules="rules" label-width="80px">
-        <el-form-item label="所属：" prop="name">
+        <el-form-item label="名称：" prop="name">
           <el-input v-model.trim="formData.name" maxLength="10" placeholder="10个字以内"></el-input>
         </el-form-item>
       </el-form>
