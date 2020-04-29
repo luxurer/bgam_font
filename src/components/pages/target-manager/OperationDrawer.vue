@@ -28,10 +28,10 @@
           <el-input-number v-model="formData.orderNum" :min="0" :max="999" :controls="false"></el-input-number>
         </el-form-item>
         <el-form-item class="keyWord">
-          <el-checkbox v-model="formData.isSearchKey">支持关键字搜索</el-checkbox>
+          <!--<el-checkbox v-model="formData.isSearchKey">支持关键字搜索</el-checkbox>-->
         </el-form-item>
         <el-form-item class="isSearch">
-          <el-checkbox v-model="formData.isSearch">支持高级筛选</el-checkbox>
+          <!--<el-checkbox v-model="formData.isSearch">支持高级筛选</el-checkbox>-->
         </el-form-item>
       </el-form>
       <div class="demo-drawer__footer">

@@ -119,7 +119,7 @@ export default {
           { required: true, message: '50个字以内', trigger: 'blur' }
         ],
         industry: [
-          { required: true, message: '请选择所属行业', trigger: 'change' }
+          { required: true, message: '请选择所属所属', trigger: 'change' }
         ],
         address: [
           { required: true, message: '请选择地址', trigger: 'change' }
@@ -131,10 +131,10 @@ export default {
     // 初始化
     init (type, row) {
       this.dialogType = type
-      let titleEnd = '企业信息'
+      let titleEnd = '社团信息'
       this.currentRowData = {}
       if (this.belong === '2') {
-        titleEnd = '机构信息'
+        titleEnd = '活动信息'
       }
       this.lngLat = []
       this.title = '新增' + titleEnd
@@ -169,25 +169,25 @@ export default {
             lng: this.lngLat[0],
             propertyList: []
           }
-          // 企业、机构名称
+          // 社团、活动名称
           data.propertyList.push({
             code: this.belong === '1' ? 'A000001' : 'A000004',
             value: this.formData.name,
             type: 1
           })
-          // 企业、机构行业
+          // 社团、活动所属
           data.propertyList.push({
             code: this.belong === '1' ? 'A000002' : 'A000005',
             value: this.formData.industry,
             type: 1
           })
-          // 企业、机构地址
+          // 社团、活动地址
           data.propertyList.push({
             code: this.belong === '1' ? 'A000003' : 'A000007',
             value: this.formData.address,
             type: 1
           })
-          // 机构网点名称
+          // 活动网点名称
           if (this.formData.level) {
             data.propertyList.push({
               code: 'A000006',

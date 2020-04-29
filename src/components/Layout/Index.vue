@@ -3,7 +3,8 @@
     <div class="top-nav">
       <div class="nav-list clearfix">
         <span class="fl">
-          <img style="vertical-align: middle;" alt="企业管理平台" src="@/assets/img/logo.png">
+          <img style="vertical-align: middle;"  height="90px" width="240px" alt="社团管理平台"
+               src="@/assets/img/haut_logo.jpg">
         </span>
         <ul class="fl" style="margin-left: 79px;">
           <li v-for="(item, index) in sidebarData" :class="$route.path.indexOf(item.url) !== -1 ? 'active' : ''"
@@ -134,4 +135,8 @@
   .el-badge__content.is-fixed {
     top: 24px !important;
   }
+  img{
+    background-color: #f0f9eb;
+  }
+
 </style>>

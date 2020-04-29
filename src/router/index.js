@@ -2,12 +2,21 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import NProgress from 'nprogress' // 模拟进度条
 import 'nprogress/nprogress.css'
-
 import Layout from '@/components/Layout/Index'
+import Login from '../components/Layout/login'
 
 Vue.use(Router)
 
 export const asyncRouterMap = [
+  {
+    //登录页
+    path: '/login',
+    name: 'Login',
+    meta: {
+      title: '登录页'
+    },
+    component: Login
+  },
   {
     path: '/',
     redirect: '/eis/enterpriseInfo',
@@ -17,14 +26,14 @@ export const asyncRouterMap = [
     path: '/eis',
     component: Layout,
     meta: {
-      title: '耗材管理系统'
+      title: '管理系统'
     },
     children: [{
       path: 'enterpriseInfo',
-      component: () => import('../views/EnterpriseInfo'),
+      component: () => import('../views/CenterInfo'),
       meta: {
-        title: '企业信息'
-      },
+        title: '管理中心'
+      }
     }, {
       path: 'targetManager',
       component: () => import('../views/TargetManager'),
@@ -35,7 +44,7 @@ export const asyncRouterMap = [
       path: 'industryManager',
       component: () => import('../views/IndustryManager'),
       meta: {
-        title: '行业维护'
+        title: '配置管理'
       }
     }]
   }

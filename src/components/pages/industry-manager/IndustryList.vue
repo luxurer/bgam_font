@@ -1,8 +1,9 @@
 <template>
-<!--  行业维护列表-->
+<!--  所属维护列表-->
   <div class="table_wrap" ref="tableWrap">
     <div class="table_bar">
-      <el-button type="primary" class="el-icon-plus fr" @click="handleEdit('add')">新增行业信息</el-button>
+      <el-button type="primary" class="el-icon-plus fr" @click="handleEdit('add')">新增{{belong === '1' ? '院级':
+        '资源'}}信息</el-button>
     </div>
     <div class="table_content" v-infinite-scroll="load" :infinite-scroll-distance="20">
       <el-table
@@ -39,6 +40,7 @@ export default {
   components: {
     OperationDrawer
   },
+
   watch: {
     belong (newVal) {
       this.pageNo = 1
@@ -48,6 +50,7 @@ export default {
   },
   data () {
     return {
+      belong:'1',
       pageNo: 1,
       pageSize: 15,
       total: 0,
@@ -59,7 +62,8 @@ export default {
         width: '200'
       }, {
         prop: 'name',
-        label: '行业名称',
+        /*label: '所属名称',*/
+        label: this.belong === '1' ? '所属学院': '占用资源',
         width: ''
       }],
       loadFlag: false, // 表格数据是否加载完毕
@@ -73,9 +77,13 @@ export default {
         this.$refs.operationDrawer.init(type, row)
       })
     },
+    // 页面展示切换
+    menuSelect (val) {
+      this.belong = val
+    },
     // 删除
     handleDel (row) {
-      this.$confirm('是否要删除此行业？', '提示', {
+      this.$confirm('是否要删除此所属？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(() => {

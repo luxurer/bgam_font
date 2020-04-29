@@ -14,7 +14,7 @@
     </template>
     <div class="demo-drawer__content">
       <el-form ref="form" :model="formData" :rules="rules" label-width="80px">
-        <el-form-item label="行业名称：" prop="name">
+        <el-form-item label="所属：" prop="name">
           <el-input v-model.trim="formData.name" maxLength="10" placeholder="10个字以内"></el-input>
         </el-form-item>
       </el-form>
@@ -50,10 +50,10 @@ export default {
   methods: {
     // 初始化
     init (type, row) {
-      this.title = '新增行业信息'
+      this.title = '新增所属信息'
       this.dialogType = type
       if (type === 'edit') {
-        this.title = '编辑行业信息'
+        this.title = '编辑所属信息'
         this.formData.name = row.name
         this.currentRowData = row
       } else {
@@ -66,11 +66,11 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           let url = '/admin/industry/add'
-          let message = '新增行业成功！'
+          let message = '新增所属成功！'
           let data = {}
           if (this.dialogType === 'edit') {
             url = '/admin/industry/edit'
-            message = '编辑行业成功！'
+            message = '编辑所属成功！'
             data.id = this.currentRowData.id
             data.name = this.formData.name
           } else {

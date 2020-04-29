@@ -1,11 +1,11 @@
 <template>
-  <!--  企业信息列表-->
+  <!--  社团信息列表-->
   <div class="enterprise_list table_wrap" ref="tableWrap">
     <div class="table_bar">
       <div class="fl form_box">
-        <el-input prefix-icon="el-icon-search" v-model.trim="keyWord" :clearable="true"
-                  placeholder="请输入关键词进行搜索"></el-input>
-        <span class="form_label">行业：</span>
+        <!--<el-input prefix-icon="el-icon-search" v-model.trim="keyWord" :clearable="true"
+                  placeholder="请输入关键词进行搜索"></el-input>-->
+        <span class="form_label">{{this.belong === '1' ? '所属学院：': '占用资源：'}}</span>
         <el-select v-model="industry" placeholder="请选择" :clearable="true">
           <el-option label="全部" value=""></el-option>
           <el-option
@@ -15,14 +15,13 @@
             :value="item.id">
           </el-option>
         </el-select>
-        <span class="high_search" @click="highSearch">高级筛选</span>
+        <!--<span class="high_search" @click="highSearch">高级筛选</span>-->
       </div>
       <div class="fr button_box">
         <el-button class="el-icon-download" type="primary" @click="handleExport">导出</el-button>
-        <el-button class="el-icon-plus" type="primary" @click="handleEdit('add')">新增{{belong === '1' ? '企业': '机构'}}信息
+        <el-button class="el-icon-plus" type="primary" @click="handleEdit('add')">新增{{belong === '1' ? '社团': '活动'}}信息
         </el-button>
-        <!-- <el-button class="el-icon-upload2" type="primary" @click="handleUpload">批量导入</el-button> -->
-        <el-upload
+        <!--<el-upload
           class="upload_demo"
           ref="upload"
           action=""
@@ -44,11 +43,11 @@
           >
             批量导入
           </el-button>
-        </el-upload>
+        </el-upload>-->
       </div>
     </div>
-    <div class="message">此分类下共{{total}}个{{belong === '1' ? '企业': '机构'}}，{{industryCount}}个行业 <span
-      class="fr high_search" @click="clearAll" v-if="showClearAll">清空高级筛选</span></div>
+    <!--<div class="message">此分类下共{{total}}个{{belong === '1' ? '社团': '活动'}}，{{industryCount}}个所属 <span
+      class="fr high_search" @click="clearAll" v-if="showClearAll">清空高级筛选</span></div>-->
     <!--    <div class="table_content" v-infinite-scroll="load" :infinite-scroll-distance="20">-->
     <div class="table_content">
       <el-table
@@ -114,10 +113,10 @@
         </el-table-column>
       </el-table>
     </div>
-    <UploadResult :belong="belong" ref="uploadResult" @refresh="refresh"/>
+    <!--<UploadResult :belong="belong" ref="uploadResult" @refresh="refresh"/>-->
     <DownloadDialog :belong="belong" :searchKey="keyWord" :highSearchData="highSearchData" ref="downloadDialog"/>
-    <HighSearch :targetList="targetList" :industryLists="industryLists" @setHighSearch="setHighSearch"
-                ref="highSearch"/>
+    <!--<HighSearch :targetList="targetList" :industryLists="industryLists" @setHighSearch="setHighSearch"
+                ref="highSearch"/>-->
     <OperationDrawer :belong="belong" :industryLists="industryLists" :columnLists="allTargetList" ref="operationDrawer"
                      @refresh="refresh"/>
   </div>
@@ -125,17 +124,17 @@
 
 <script>
   import {handleUpload} from '@/utils/index'
-  import UploadResult from './UploadResult'
+  /*import UploadResult from './UploadResult'*/
   import DownloadDialog from './DownloadDialog'
-  import HighSearch from './HighSearch'
+  /*import HighSearch from './HighSearch'*/
   import OperationDrawer from './OperationDrawer'
 
   export default {
-    name: 'EnterpriseList',
+    name: 'CenterManager',
     components: {
-      UploadResult,
+      /*UploadResult,*/
       DownloadDialog,
-      HighSearch,
+      /*HighSearch,*/
       OperationDrawer
     },
     props: ['belong'],
@@ -144,13 +143,13 @@
         pageNo: 1,
         pageSize: 15,
         total: 0,
-        industryCount: 0, // 行业数量
+        industryCount: 0, // 所属数量
         maxTableHeight: 100,
         keyWord: '',
         industry: '',
         tableData: [],
         columnLists: [], // 动态表头项
-        industryLists: [], // 所有行业数据
+        industryLists: [], // 所有所属数据
         allTargetList: [], // 所有指标数据
         targetList: [], // 所有可被筛选的指标数据
         highSearchList: [], // 高级筛选组件返回的数据
@@ -298,7 +297,7 @@
           }
         }).then(({data}) => {
           if (data.finish) {
-            this.$refs.uploadResult.init(data)
+            /*this.$refs.uploadResult.init(data)*/
             this.fullscreenLoading = false;
           } else {
             setTimeout(() => {
@@ -336,7 +335,7 @@
           })
         })
       },
-      // 获取所有行业
+      // 获取所有所属
       getIndustry() {
         const belong = this.belong
         this.axios({
