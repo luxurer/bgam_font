@@ -49,7 +49,7 @@
             } else {
               this.$message({
                 type: 'error',
-                message: '账号或密码错误，请检查',
+                message: '账号或密码错误，请检查!',
                 offset: 90
               })
             }
