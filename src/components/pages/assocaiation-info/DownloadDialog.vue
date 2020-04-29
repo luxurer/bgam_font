@@ -60,7 +60,7 @@
       handleExport() {
         this.axios({
           method: 'post',
-          url: '/admin/enterprisOrOrgan/getData',
+          url: '/admin/asscaiationOrActivity/getData',
           data: {
             belong: this.belong,
             searchKey: this.searchKey,
@@ -75,7 +75,7 @@
       queryExportState(token) {
         this.axios({
           method: 'get',
-          url: '/admin/enterprisOrOrgan/queryExportState',
+          url: '/admin/asscaiationOrActivity/queryExportState',
           params: {
             token: token,
           }

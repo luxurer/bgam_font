@@ -161,7 +161,7 @@ export default {
     submit () {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          let url = '/admin/enterprisOrOrgan/addOrEdit'
+          let url = '/admin/asscaiationOrActivity/addOrEdit'
           let message = '新增成功！'
           let data = {
             belong: Number(this.belong),

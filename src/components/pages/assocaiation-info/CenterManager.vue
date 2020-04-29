@@ -278,7 +278,7 @@
           })
         } else {
           this.fullscreenLoading = true
-          handleUpload('/admin/enterprisOrOrgan/upload', {belong: this.belong}, [this.files], (data, type) => {
+          handleUpload('/admin/asscaiationOrActivity/upload', {belong: this.belong}, [this.files], (data, type) => {
             if (type === 'success') {
               this.queryImportState(data.data)
             } else {
@@ -291,7 +291,7 @@
       queryImportState(token) {
         this.axios({
           method: 'get',
-          url: '/admin/enterprisOrOrgan/queryImportState',
+          url: '/admin/asscaiationOrActivity/queryImportState',
           params: {
             token: token,
           }
@@ -320,7 +320,7 @@
         }).then(() => {
           this.axios({
             method: 'get',
-            url: '/admin/enterprisOrOrgan/delete',
+            url: '/admin/asscaiationOrActivity/delete',
             params: {
               id: row.id,
               belong: this.belong
@@ -411,7 +411,7 @@
         const belong = this.belong
         this.axios({
           method: 'post',
-          url: '/admin/enterprisOrOrgan/queryList',
+          url: '/admin/asscaiationOrActivity/queryList',
           data: {
             searchKey: this.keyWord,
             pageNo: this.pageNo,

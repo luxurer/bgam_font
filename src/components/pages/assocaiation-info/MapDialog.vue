@@ -128,7 +128,7 @@ export default {
     queryGeoUrl () {
       this.axios({
         method: 'get',
-        url: '/admin/enterprisOrOrgan/queryGeoUrl'
+        url: '/admin/asscaiationOrActivity/queryGeoUrl'
       }).then(({ data }) => {
         this.geoUrl = data.url
         this.geoKey = data.key
