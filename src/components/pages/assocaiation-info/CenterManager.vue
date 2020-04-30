@@ -116,10 +116,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <!--<UploadResult :belong="belong" ref="uploadResult" @refresh="refresh"/>-->
     <DownloadDialog :belong="belong" :searchKey="keyWord" :highSearchData="highSearchData" ref="downloadDialog"/>
-    <!--<HighSearch :targetList="targetList" :sourceLists="sourceLists" @setHighSearch="setHighSearch"
-                ref="highSearch"/>-->
     <OperationDrawer :belong="belong" :sourceLists="sourceLists" :columnLists="allTargetList" ref="operationDrawer"
                      @refresh="refresh"/>
   </div>
@@ -132,9 +129,7 @@
   export default {
     name: 'CenterManager',
     components: {
-      /*UploadResult,*/
       DownloadDialog,
-      /*HighSearch,*/
       OperationDrawer
     },
     props: ['belong'],
@@ -145,9 +140,9 @@
         total: 0,
         sourceCount: 0, // 所属数量
         maxTableHeight: 100,
-        keyWord: '',
-        source: '',
-        tableData: [],
+        keyWord: '',//未用
+        source: '',//资源：所属学院/占用资源
+        tableData: [],//动态属性值
         columnLists: [], // 动态表头项
         sourceLists: [], // 所有所属数据
         allTargetList: [], // 所有指标数据
@@ -167,7 +162,7 @@
         fullscreenLoading: false
       }
     },
-    computed: {
+    computed: {/*
       showClearAll() {
         if (this.highSearchData.searchList.length === 0) {
           return false
@@ -181,7 +176,7 @@
         })
         if (result) return true
         return false
-      }
+      }*/
     },
     watch: {
       belong(newVal) {
@@ -213,84 +208,15 @@
         if (newVal) {
           sourceList.push(newVal)
         }
-        this.highSearchData.sourceList = sourceList
+       /* this.highSearchData.sourceList = sourceList*/
         this.getTableData('cover')
       }
     },
     methods: {
-      /*// 高级筛选
-      highSearch() {
-        if (this.targetList.length > 0) {
-          this.$refs.highSearch.init(this.highSearchList)
-        } else {
-          this.$message({
-              type: 'error',
-              message: '暂无可用筛选项',
-              offset: 90
-            }
-          )
-        }
-      },*/
-      /*// 设置高级筛选
-      setHighSearch(data) {
-        this.highSearchList = data
-        this.highSearchData.searchList = []
-        data.forEach((item) => {
-          if (item.type === 3) {
-            this.highSearchData.searchList.push({
-              code: item.code,
-              type: item.type,
-              value: {
-                start: item.date[0] ? item.date[0] : '',
-                end: item.date[1] ? item.date[1] : ''
-              }
-            })
-          } else {
-            this.highSearchData.searchList.push({
-              code: item.code,
-              type: item.type,
-              value: item.value
-            })
-          }
-        })
-        this.getTableData('cover')
-      },
-      // 清空高级筛选
-      clearAll() {
-        this.highSearchList = []
-        this.highSearchData.searchList = []
-        this.$refs.highSearch.resetForm(this.targetList)
-        this.getTableData('cover')
-      },*/
       // 导出
       handleExport() {
         this.$refs.downloadDialog.init()
       },
-      /*// 选择文件
-      handleChange(file) {
-        this.files = file.raw
-      },*/
-      /*// 获取导入进度
-      queryImportState(token) {
-        this.axios({
-          method: 'get',
-          url: '/admin/asscaiationOrActivity/queryImportState',
-          params: {
-            token: token,
-          }
-        }).then(({data}) => {
-          if (data.finish) {
-            /!*this.$refs.uploadResult.init(data)*!/
-            this.fullscreenLoading = false;
-          } else {
-            setTimeout(() => {
-              this.queryImportState(token)
-            }, 1000)
-          }
-        }).catch(() => {
-          this.fullscreenLoading = false;
-        })
-      },*/
       // 新增、编辑
       handleEdit(type, row) {
         this.$refs.operationDrawer.init(type, row)
@@ -402,7 +328,7 @@
             pageNo: this.pageNo,
             pageSize: this.pageSize,
             belong: belong,
-            highSearch: this.highSearchData
+            /*highSearch: this.highSearchData*/
           }
         }).then((data) => {
           console.log(JSON.stringify(data));

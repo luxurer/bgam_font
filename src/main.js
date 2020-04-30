@@ -29,14 +29,14 @@ router.beforeEach(((to, from, next) => {
   if (to.path == '/logout') {
     sessionStorage.clear();
     next({path: '/login'});
-  } else if (to.path == '/login') {
+  } /*else if (to.path == '/login') {
     //已登录，送到主页
     if (isLogin != null) {
-      next({path: '/home'})
+      next({path: '/eis/enterpriseInfo'})
     }
     //未登录
     next();
-  } else if (isLogin == null) {
+  }*/ else if (isLogin == null) {
     next({path: '/login'});
   }
 }));

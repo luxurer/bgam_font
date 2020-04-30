@@ -22,7 +22,6 @@
     name: "login",
     data() {
       return {
-        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
         form: {
           name: '',
           password: ''
@@ -36,33 +35,6 @@
       }
     },
     methods: {
-      /*onSubmit(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            if (this.form.name === 'liuwei' && this.form.password === '111111') {
-              this.$message({
-                type: 'success',
-                message: '登录成功！',
-                offset: 90
-              })
-              this.$router.push("/eis/enterpriseInfo");
-            } else {
-              this.$message({
-                type: 'error',
-                message: '账号或密码错误，请检查!',
-                offset: 90
-              })
-            }
-          } else {
-            this.$message({
-              type: 'error',
-              message: '验证失败',
-              offset: 90
-            })
-            return false;
-          }
-        });
-      },*/
       // 登录
       onSubmit(formName) {
         this.axios({
@@ -94,13 +66,7 @@
               offset: 90
             })
           }
-          //this.refresh()
         })
-        /*this.$confirm('是否确认删除？', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消'
-        }).then(() => {
-        })*/
       }
     }
   }

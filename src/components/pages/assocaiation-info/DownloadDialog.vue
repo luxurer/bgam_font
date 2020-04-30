@@ -6,7 +6,6 @@
       width="600px">
       <div class="content">
         <div>
-          <!--<div><span class="numbers">1</span></div>-->
           <img
             v-loading.fullscreen.lock="fullscreenLoading"
             element-loading-text="导出数据准备中..."
@@ -17,11 +16,6 @@
             @click="handleExport">
           <div>点击导出当前筛选数据</div>
         </div>
-        <!--<div>
-          <div><span class="numbers">2</span></div>
-          <img src="@/assets/img/download_excel.png" alt="点击导出EXCEL模板" @click="exportTemplate">
-          <div>点击导出EXCEL模板</div>
-        </div>-->
       </div>
     </el-dialog>
   </div>
