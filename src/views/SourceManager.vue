@@ -1,6 +1,6 @@
 <template>
   <!--  所属维护-->
-  <div class="industry_manager">
+  <div class="source_manager">
     <!--<div class="header_wrap">
       <span>社团信息数据库</span>
     </div>-->
@@ -10,19 +10,19 @@
         <li :class="belong === '2' ?'active_second_menu': ''" @click="menuSelect('2')">资源管理</li>
       </ul>
       <div class="content_right">
-        <IndustryList :belong="belong"/>
+        <sourceList :belong="belong"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import IndustryList from '../components/pages/industry-manager/IndustryList'
+  import sourceList from '../components/pages/source-manager/SourceList'
 
   export default {
-    name: 'IndustryManager',
+    name: 'SourceManager',
     components: {
-      IndustryList
+      sourceList
     },
     data() {
       return {
@@ -39,7 +39,7 @@
 </script>
 
 <style lang="less" scoped>
-  .industry_manager {
+  .source_manager {
 
   }
 </style>

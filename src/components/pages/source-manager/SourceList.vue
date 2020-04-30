@@ -35,7 +35,7 @@
 <script>
 import OperationDrawer from './OperationDrawer'
 export default {
-  name: 'IndustryList',
+  name: 'SourceList',
   props: ['belong'],
   components: {
     OperationDrawer
@@ -89,7 +89,7 @@ export default {
       }).then(() => {
         this.axios({
           method: 'get',
-          url: '/admin/industry/delete',
+          url: '/admin/source/delete',
           params: {
             id: row.id
           }
@@ -109,7 +109,7 @@ export default {
       this.emptyText = ' '
       this.axios({
         method: 'get',
-        url: '/admin/industry/queryList',
+        url: '/admin/source/queryList',
         params: {
           pageNo: this.pageNo,
           pageSize: this.pageSize,

@@ -65,11 +65,11 @@ export default {
     submit () {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          let url = '/admin/industry/add'
+          let url = '/admin/source/add'
           let message = '新增所属成功！'
           let data = {}
           if (this.dialogType === 'edit') {
-            url = '/admin/industry/edit'
+            url = '/admin/source/edit'
             message = '编辑所属成功！'
             data.id = this.currentRowData.id
             data.name = this.formData.name

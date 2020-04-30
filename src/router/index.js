@@ -41,8 +41,8 @@ export const asyncRouterMap = [
         title: '指标维护'
       }
     }, {
-      path: 'industryManager',
-      component: () => import('../views/IndustryManager'),
+      path: 'sourceManager',
+      component: () => import('../views/SourceManager'),
       meta: {
         title: '配置管理'
       }

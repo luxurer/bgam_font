@@ -6,10 +6,10 @@
         <!--<el-input prefix-icon="el-icon-search" v-model.trim="keyWord" :clearable="true"
                   placeholder="请输入关键词进行搜索"></el-input>-->
         <span class="form_label">{{this.belong === '1' ? '所属学院：': '占用资源：'}}</span>
-        <el-select v-model="industry" placeholder="请选择" :clearable="true">
+        <el-select v-model="source" placeholder="请选择" :clearable="true">
           <el-option label="全部" value=""></el-option>
           <el-option
-            v-for="item in industryLists"
+            v-for="item in sourceLists"
             :key="item.id"
             :label="item.name"
             :value="item.id">
@@ -46,7 +46,7 @@
         </el-upload>-->
       </div>
     </div>
-    <!--<div class="message">此分类下共{{total}}个{{belong === '1' ? '社团': '活动'}}，{{industryCount}}个所属 <span
+    <!--<div class="message">此分类下共{{total}}个{{belong === '1' ? '社团': '活动'}}，{{sourceCount}}个所属 <span
       class="fr high_search" @click="clearAll" v-if="showClearAll">清空高级筛选</span></div>-->
     <!--    <div class="table_content" v-infinite-scroll="load" :infinite-scroll-distance="20">-->
     <div class="table_content">
@@ -98,7 +98,10 @@
           :width="item.width"
           :label="item.name">
           <template slot-scope="scope">
-            <span v-if="item.code === 'A000002' || item.code === 'A000005'">{{scope.row.industryInfo.name}}</span>
+            <!--<span v-html="scope.row[item.code]"></span>-->
+            <!--需要所属资源NAME，而主表存的是是ID-->
+            <span v-if="item.code === 'A000002' || item.code === 'A000005'">{{scope.row.sourceInfo.name}}</span>
+            <!--其他指标值-->
             <span v-else v-html="scope.row[item.code]"></span>
           </template>
         </el-table-column>
@@ -115,18 +118,15 @@
     </div>
     <!--<UploadResult :belong="belong" ref="uploadResult" @refresh="refresh"/>-->
     <DownloadDialog :belong="belong" :searchKey="keyWord" :highSearchData="highSearchData" ref="downloadDialog"/>
-    <!--<HighSearch :targetList="targetList" :industryLists="industryLists" @setHighSearch="setHighSearch"
+    <!--<HighSearch :targetList="targetList" :sourceLists="sourceLists" @setHighSearch="setHighSearch"
                 ref="highSearch"/>-->
-    <OperationDrawer :belong="belong" :industryLists="industryLists" :columnLists="allTargetList" ref="operationDrawer"
+    <OperationDrawer :belong="belong" :sourceLists="sourceLists" :columnLists="allTargetList" ref="operationDrawer"
                      @refresh="refresh"/>
   </div>
 </template>
 
 <script>
-  import {handleUpload} from '@/utils/index'
-  /*import UploadResult from './UploadResult'*/
   import DownloadDialog from './DownloadDialog'
-  /*import HighSearch from './HighSearch'*/
   import OperationDrawer from './OperationDrawer'
 
   export default {
@@ -143,18 +143,18 @@
         pageNo: 1,
         pageSize: 15,
         total: 0,
-        industryCount: 0, // 所属数量
+        sourceCount: 0, // 所属数量
         maxTableHeight: 100,
         keyWord: '',
-        industry: '',
+        source: '',
         tableData: [],
         columnLists: [], // 动态表头项
-        industryLists: [], // 所有所属数据
+        sourceLists: [], // 所有所属数据
         allTargetList: [], // 所有指标数据
         targetList: [], // 所有可被筛选的指标数据
         highSearchList: [], // 高级筛选组件返回的数据
         highSearchData: {
-          industryList: [],
+          sourceList: [],
           searchList: []
         },
         fixColumnName: { // 固定表头项的名称
@@ -187,36 +187,38 @@
       belong(newVal) {
         this.tableData = []
         this.columnLists = []
-        this.industryLists = []
+        this.sourceLists = []
         this.targetList = []
         this.highSearchList = []
         this.pageNo = 1
         this.total = 0
-        this.industryCount = 0
+        this.sourceCount = 0
         this.highSearchData = {
-          industryList: [],
+          sourceList: [],
           searchList: []
         }
         this.keyWord = ''
-        this.industry = ''
-        this.getIndustry()
+        this.source = ''
+        this.getsource()
         this.getColumns()
-        this.getTableData('cover')
+        /*this.getTableData('cover')*/
+        //睡眠后运行
+        setTimeout(this.getTableData('cover'), 500)
       },
       keyWord() {
         this.getTableData('cover')
       },
-      industry(newVal) {
-        let industryList = []
+      source(newVal) {
+        let sourceList = []
         if (newVal) {
-          industryList.push(newVal)
+          sourceList.push(newVal)
         }
-        this.highSearchData.industryList = industryList
+        this.highSearchData.sourceList = sourceList
         this.getTableData('cover')
       }
     },
     methods: {
-      // 高级筛选
+      /*// 高级筛选
       highSearch() {
         if (this.targetList.length > 0) {
           this.$refs.highSearch.init(this.highSearchList)
@@ -228,8 +230,8 @@
             }
           )
         }
-      },
-      // 设置高级筛选
+      },*/
+      /*// 设置高级筛选
       setHighSearch(data) {
         this.highSearchList = data
         this.highSearchData.searchList = []
@@ -259,35 +261,16 @@
         this.highSearchData.searchList = []
         this.$refs.highSearch.resetForm(this.targetList)
         this.getTableData('cover')
-      },
+      },*/
       // 导出
       handleExport() {
         this.$refs.downloadDialog.init()
       },
-      // 选择文件
+      /*// 选择文件
       handleChange(file) {
         this.files = file.raw
-      },
-      // 批量导入
-      handleUpload() {
-        if (this.files.size > 10 * 1024 * 1024) {
-          this.$message({
-            type: 'error',
-            message: '上传文件不能大于10M',
-            offset: 90
-          })
-        } else {
-          this.fullscreenLoading = true
-          handleUpload('/admin/asscaiationOrActivity/upload', {belong: this.belong}, [this.files], (data, type) => {
-            if (type === 'success') {
-              this.queryImportState(data.data)
-            } else {
-              this.fullscreenLoading = false
-            }
-          })
-        }
-      },
-      // 获取导入进度
+      },*/
+      /*// 获取导入进度
       queryImportState(token) {
         this.axios({
           method: 'get',
@@ -297,7 +280,7 @@
           }
         }).then(({data}) => {
           if (data.finish) {
-            /*this.$refs.uploadResult.init(data)*/
+            /!*this.$refs.uploadResult.init(data)*!/
             this.fullscreenLoading = false;
           } else {
             setTimeout(() => {
@@ -307,7 +290,7 @@
         }).catch(() => {
           this.fullscreenLoading = false;
         })
-      },
+      },*/
       // 新增、编辑
       handleEdit(type, row) {
         this.$refs.operationDrawer.init(type, row)
@@ -336,11 +319,11 @@
         })
       },
       // 获取所有所属
-      getIndustry() {
+      getsource() {
         const belong = this.belong
         this.axios({
           method: 'get',
-          url: '/admin/industry/queryList',
+          url: '/admin/source/queryList',
           params: {
             pageNo: 1,
             pageSize: 999,
@@ -348,7 +331,7 @@
           }
         }).then((data) => {
           if (belong === this.belong) {  // 防止数据未加载完时切换菜单，造成数据错乱
-            this.industryLists = data.data
+            this.sourceLists = data.data
           }
         })
       },
@@ -372,9 +355,10 @@
                 if (data.data.length > 6) {
                   item.width = '150'
                 }
-                if (item.isSearch) {
+                /*if (item.isSearch) {
                   this.targetList.push(item)
-                }
+                }*/
+                //不为社团名称固定项，就插入到columnLists
                 if (item.code !== 'A000001') {
                   this.columnLists.push(item)
                 } else {
@@ -389,6 +373,7 @@
                 if (item.isSearch) {
                   this.targetList.push(item)
                 }
+                //不为活动名称、规模固定项，就插入到columnLists
                 if (item.code === 'A000004') {
                   this.fixColumnName.name = item.name
                 } else if (item.code === 'A000006') {
@@ -420,12 +405,15 @@
             highSearch: this.highSearchData
           }
         }).then((data) => {
+          console.log(JSON.stringify(data));
+          //console.log(JSON.stringify(data.data.list[0]));
           if (belong === this.belong) {  // 防止数据未加载完时切换菜单，造成数据错乱
             this.loadFlag = true
             data.data.list.forEach((item, index) => {
               item.index = (data.page.pageNo - 1) * data.page.pageSize + index + 1
               item.propertyList.forEach(innerItem => {
                 item[innerItem.code] = innerItem.value
+                //规模(级别)
                 if (innerItem.code === 'A000006') {
                   item.level = innerItem.value
                 }
@@ -441,7 +429,7 @@
               this.emptyText = '暂无数据'
             }
             this.total = data.page.total
-            this.industryCount = data.data.industryCount
+            this.sourceCount = data.data.sourceCount
           }
         })
       },
@@ -471,7 +459,7 @@
       let timer = setInterval(() => {
 
         if (sessionStorage.getItem('token')) {
-          this.getIndustry()
+          this.getsource()
           this.getColumns()
           this.getTableData()
           this.$nextTick(() => {
@@ -483,7 +471,7 @@
           count++
         }
         if (count >= 10) {
-          this.getIndustry()
+          this.getsource()
           this.getColumns()
           this.getTableData()
           this.$nextTick(() => {

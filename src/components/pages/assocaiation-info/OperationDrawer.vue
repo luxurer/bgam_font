@@ -18,10 +18,10 @@
         <el-form-item :label="fixColumnName.name" prop="name">
           <el-input v-model.trim="formData.name" maxLength="50" placeholder="50个字以内"></el-input>
         </el-form-item>
-        <el-form-item :label="fixColumnName.industry" prop="industry">
-          <el-select v-model="formData.industry" placeholder="请选择">
+        <el-form-item :label="fixColumnName.source" prop="source">
+          <el-select v-model="formData.source" placeholder="请选择">
             <el-option
-              v-for="item in industryLists"
+              v-for="item in sourceLists"
               :key="item.id"
               :clearable="true"
               :label="item.name"
@@ -92,7 +92,7 @@ export default {
   components: {
     MapDialog
   },
-  props: ['belong', 'industryLists', 'columnLists'],
+  props: ['belong', 'sourceLists', 'columnLists'],
   data () {
     return {
       dialogType: '',
@@ -102,13 +102,13 @@ export default {
       direction: 'rtl',
       fixColumnName: { // 固定表单项的名称
         address: '',
-        industry: '',
+        source: '',
         name: '',
         level: '',
       },
       formData: {
         name: '',
-        industry: '',
+        source: '',
         address: '',
         level: '',
         items: []
@@ -118,7 +118,7 @@ export default {
         name: [
           { required: true, message: '50个字以内', trigger: 'blur' }
         ],
-        industry: [
+        source: [
           { required: true, message: '请选择所属所属', trigger: 'change' }
         ],
         address: [
@@ -178,7 +178,7 @@ export default {
           // 社团、活动所属
           data.propertyList.push({
             code: this.belong === '1' ? 'A000002' : 'A000005',
-            value: this.formData.industry,
+            value: this.formData.source,
             type: 1
           })
           // 社团、活动地址
@@ -227,7 +227,7 @@ export default {
     resetForm (targetList) {
       this.formData.name = ''
       this.formData.address = ''
-      this.formData.industry = ''
+      this.formData.source = ''
       this.formData.level = ''
       this.formData.items = []
       targetList.forEach(item => {
@@ -246,9 +246,9 @@ export default {
             }
           }
           if (item.code === 'A000002' || item.code === 'A000005') {
-            this.fixColumnName.industry = item.name
+            this.fixColumnName.source = item.name
             if (this.dialogType === 'edit') {
-              this.formData.industry = this.currentRowData[item.code]
+              this.formData.source = this.currentRowData[item.code]
             }
           }
           if (item.code === 'A000001' || item.code === 'A000004') {
