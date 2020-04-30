@@ -18,6 +18,29 @@ Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.prototype.axios = service
 
+//路由跳转前
+router.beforeEach(((to, from, next) => {
+  let isLogin = sessionStorage.getItem('bgam_font_isLogin');
+  //已登录，放行
+  if (isLogin != null) {
+    next();
+  }
+  //注销
+  if (to.path == '/logout') {
+    sessionStorage.clear();
+    next({path: '/login'});
+  } else if (to.path == '/login') {
+    //已登录，送到主页
+    if (isLogin != null) {
+      next({path: '/home'})
+    }
+    //未登录
+    next();
+  } else if (isLogin == null) {
+    next({path: '/login'});
+  }
+}));
+
 new Vue({
   router,
   render: h => h(App)
