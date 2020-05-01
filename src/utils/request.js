@@ -16,9 +16,9 @@ service.interceptors.request.use(config => {
   config.headers['content-type'] = config.headers['content-type'] ? config.headers['content-type'] : 'application/json'
   config.headers.dataType = 'json'
   loadingInstance = Loading.service({'fullscreen': true, background: 'rgba(255, 255, 255, 0.1)'})
-  if (sessionStorage.getItem('token')) {
+  if (sessionStorage.getItem('font_token')) {
     //  存在将api_token写入 request header
-    const Authorization = 'Bearer ' + sessionStorage.getItem('token')
+    const Authorization = 'Bearer ' + sessionStorage.getItem('font_token')
     config.headers.Authorization = Authorization
   }
   if (config.method === 'get') {

@@ -38,7 +38,7 @@
       init(data) {
         this.dialogVisible = true
       },
-      // 导出模板
+      /*// 导出模板
       exportTemplate() {
         this.axios({
           method: 'get',
@@ -49,7 +49,7 @@
         }).then(({data}) => {
           handleExport(data.url)
         })
-      },
+      },*/
       // 导出当前数据
       handleExport() {
         this.axios({

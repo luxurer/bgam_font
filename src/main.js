@@ -11,7 +11,7 @@ import Router from 'vue-router'
 import service from './utils/request.js'
 
 const originalPush = Router.prototype.push
-Router.prototype.push = function push (location) {
+Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
 Vue.config.productionTip = false
@@ -22,21 +22,14 @@ Vue.prototype.axios = service
 router.beforeEach(((to, from, next) => {
   let isLogin = sessionStorage.getItem('bgam_font_isLogin');
   //已登录，放行
-  if (isLogin != null) {
+  if (isLogin != null || to.path == '/login') {
     next();
   }
   //注销
   if (to.path == '/logout') {
     sessionStorage.clear();
     next({path: '/login'});
-  } /*else if (to.path == '/login') {
-    //已登录，送到主页
-    if (isLogin != null) {
-      next({path: '/eis/enterpriseInfo'})
-    }
-    //未登录
-    next();
-  }*/ else if (isLogin == null) {
+  } else if (isLogin == null) {
     next({path: '/login'});
   }
 }));

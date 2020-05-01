@@ -146,6 +146,7 @@ export default {
         }
       }
       this.resetForm(this.columnLists)
+      //展示
       this.drawer = true
     },
     // 打开地图
@@ -187,7 +188,7 @@ export default {
             value: this.formData.address,
             type: 1
           })
-          // 活动网点名称
+          // 活动规模名称
           if (this.formData.level) {
             data.propertyList.push({
               code: 'A000006',
@@ -236,6 +237,7 @@ export default {
             code: item.code,
             name: item.name,
             type: item.type,
+            /*通过动态指标code设置这行数据的动态值*/
             value: this.currentRowData[item.code] ? this.currentRowData[item.code].replace(/<br\s*\/?>/gi,'\n') : ''
           })
         }

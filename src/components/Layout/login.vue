@@ -58,7 +58,9 @@
               offset: 90
             });
           } else {
+            sessionStorage.clear();
             sessionStorage.setItem('bgam_font_isLogin', 'true');
+            sessionStorage.setItem("font_token",data.data.token);
             this.$router.push("/eis/enterpriseInfo");
             this.$message({
               type: 'success',

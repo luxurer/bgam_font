@@ -3,8 +3,6 @@
   <div class="enterprise_list table_wrap" ref="tableWrap">
     <div class="table_bar">
       <div class="fl form_box">
-        <!--<el-input prefix-icon="el-icon-search" v-model.trim="keyWord" :clearable="true"
-                  placeholder="请输入关键词进行搜索"></el-input>-->
         <span class="form_label">{{this.belong === '1' ? '所属学院：': '占用资源：'}}</span>
         <el-select v-model="source" placeholder="请选择" :clearable="true">
           <el-option label="全部" value=""></el-option>
@@ -15,40 +13,13 @@
             :value="item.id">
           </el-option>
         </el-select>
-        <!--<span class="high_search" @click="highSearch">高级筛选</span>-->
       </div>
       <div class="fr button_box">
         <el-button class="el-icon-download" type="primary" @click="handleExport">导出</el-button>
         <el-button class="el-icon-plus" type="primary" @click="handleEdit('add')">新增{{belong === '1' ? '社团': '活动'}}信息
         </el-button>
-        <!--<el-upload
-          class="upload_demo"
-          ref="upload"
-          action=""
-          accept=".xls"
-          :multiple="false"
-          :show-file-list="false"
-          :on-change="handleChange"
-          :http-request="handleUpload"
-        >
-          <el-button
-            slot="trigger"
-            type="primary"
-            class="upload
-              el-icon-upload2"
-            v-loading.fullscreen.lock="fullscreenLoading"
-            element-loading-text="正在导入中..."
-            element-loading-spinner="el-icon-loading"
-            element-loading-background="rgba(0, 0, 0, 0.6)"
-          >
-            批量导入
-          </el-button>
-        </el-upload>-->
       </div>
     </div>
-    <!--<div class="message">此分类下共{{total}}个{{belong === '1' ? '社团': '活动'}}，{{sourceCount}}个所属 <span
-      class="fr high_search" @click="clearAll" v-if="showClearAll">清空高级筛选</span></div>-->
-    <!--    <div class="table_content" v-infinite-scroll="load" :infinite-scroll-distance="20">-->
     <div class="table_content">
       <el-table
         :data="tableData"
@@ -162,7 +133,7 @@
         fullscreenLoading: false
       }
     },
-    computed: {/*
+    computed: {
       showClearAll() {
         if (this.highSearchData.searchList.length === 0) {
           return false
@@ -176,7 +147,7 @@
         })
         if (result) return true
         return false
-      }*/
+      }
     },
     watch: {
       belong(newVal) {
@@ -194,11 +165,14 @@
         }
         this.keyWord = ''
         this.source = ''
+        //获取所属学院/占用资源
         this.getsource()
+        //获取表头
         this.getColumns()
-        /*this.getTableData('cover')*/
+        //获取表身
+        this.getTableData('cover')
         //睡眠后运行
-        setTimeout(this.getTableData('cover'), 500)
+        /*setTimeout(this.getTableData('cover'), 500)*/
       },
       keyWord() {
         this.getTableData('cover')
@@ -208,7 +182,7 @@
         if (newVal) {
           sourceList.push(newVal)
         }
-       /* this.highSearchData.sourceList = sourceList*/
+        this.highSearchData.sourceList = sourceList
         this.getTableData('cover')
       }
     },
@@ -328,11 +302,9 @@
             pageNo: this.pageNo,
             pageSize: this.pageSize,
             belong: belong,
-            /*highSearch: this.highSearchData*/
+            highSearch: this.highSearchData
           }
         }).then((data) => {
-          console.log(JSON.stringify(data));
-          //console.log(JSON.stringify(data.data.list[0]));
           if (belong === this.belong) {  // 防止数据未加载完时切换菜单，造成数据错乱
             this.loadFlag = true
             data.data.list.forEach((item, index) => {
@@ -381,36 +353,18 @@
       }
     },
     mounted() {
-      let count = 0
-      let timer = setInterval(() => {
-
-        if (sessionStorage.getItem('token')) {
-          this.getsource()
-          this.getColumns()
-          this.getTableData()
-          this.$nextTick(() => {
-            this.maxTableHeight = this.$refs.tableWrap.offsetHeight - 80 - 60 - 20;
-            this.load()
-          })
-          clearInterval(timer)
-        } else {
-          count++
-        }
-        if (count >= 10) {
-          this.getsource()
-          this.getColumns()
-          this.getTableData()
-          this.$nextTick(() => {
-            this.maxTableHeight = this.$refs.tableWrap.offsetHeight - 80 - 60 - 20;
-            this.load()
-          })
-          clearInterval(timer)
-        }
-      }, 100)
-      const _this = this
-      window.onresize = function () {
-        _this.maxTableHeight = _this.$refs.tableWrap.offsetHeight - 80 - 60 - 20;
-      }
+      /*let timer = setInterval(() => {*/
+      this.getsource()
+      this.getColumns()
+      this.getTableData()
+      //更新完DOM操作DOM
+      this.$nextTick(() => {
+        let offsetHeight = this.$refs.tableWrap.offsetHeight;
+        this.maxTableHeight = this.$refs.tableWrap.offsetHeight - 100/* 80 - 60 - 20*/;
+        this.load()
+      })
+      /*clearInterval(timer)
+    }, 100)*/
     }
   }
 </script>
